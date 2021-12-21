@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+    web-staging:
+        build: .
+        container_name: dispatch-backend-staging
+        command: python manage.py runserver 0.0.0.0:8090
+        volumes:
+          - .:/code
+        ports:
+          - "8090:8090"
+        depends_on:
+          - db-staging
+
+    db-staging:
+        image: postgres:latest
+        environment:
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
+        container_name: dispatch-planner-stagingdb
+        ports:
+            - 5460:5460
